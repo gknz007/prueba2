@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadowline</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #611a68; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #18f7b4;
+            color: rgb(94, 23, 97);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgb(7, 241, 132);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .form-row div {
+            flex: 1;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #00ffc8;
+            color: rgb(128, 44, 161);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #cccccc;
+        }
+        .tareas-container {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .tarea {
+            background-color: rgb(28, 240, 169);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+        .tarea:hover {
+            transform: scale(1.02);
+        }
+        .tarea p {
+            margin: 5px 0;
+        }
+        .nombre-personal {
+            font-weight: bold;
+            color: #666;
+            animation: colorChange 3s infinite;
+        }
+        @keyframes colorChange {
+            0% {
+                color: #6c1c77;
+            }
+            50% {
+                color: #561663;
+            }
+            100% {
+                color: #641564;
+            }
+        }
+        footer {
+            background-color: #0026ff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed; 
+            bottom: 0;
+            width: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        Tareas pendientes.
+    </header>
+    <form id="formTareas">
+        <div class="form-row">
+            <div>
+                <label for="nombre">Nombre Personal:</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div>
+                <label for="titulo">Título tarea:</label>
+                <input type="text" id="titulo" required>
+            </div>
+        </div>
+        <div>
+            <label for="contenido">Contenido tarea:</label>
+            <input type="text" id="contenido" required>
+        </div>
+        <div>
+            <label for="duracion">Duración en días:</label>
+            <input type="number" id="duracion" required>
+        </div>
+        <div>
+            <button type="reset">Resetear</button>
+            <button type="submit">Guardar</button>
+        </div>
+    </form>
+
+    <div class="tareas-container" id="tareasContainer"></div>
+    
+    <footer>
+        Gastón Segura
+    </footer>
+
+    <script>
+        const form = document.getElementById("formTareas");
+        const tareasContainer = document.getElementById("tareasContainer"); 
+
+        form.addEventListener("submit", (event) => { 
+            event.preventDefault();
+
+            const nombre = document.getElementById("nombre").value;
+            const titulo = document.getElementById("titulo").value;
+            const contenido = document.getElementById("contenido").value;
+            const duracion = document.getElementById("duracion").value;
+
+            const tarea = document.createElement("div"); 
+            tarea.classList.add("tarea");
+            tarea.innerHTML = `
+                <p class="nombre-personal">${nombre}</p>
+                <p><strong>Título:</strong> ${titulo}</p>
+                <p>${contenido}</p>
+                <p><strong>Duración:</strong> ${duracion} días</p>
+            `; 
+
+            tareasContainer.insertBefore(tarea, tareasContainer.firstChild);
+            form.reset();
+        });
+    </script>
+</body>
+</html>
